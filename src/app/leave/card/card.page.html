@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="./leave"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="m1"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Leave {{ Card?.Application_No}}</ion-title>
+  
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" fill="clear" (click)="updatePopover($event,Card?.Application_No)">
+        <ion-icon  name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>      
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding *ngIf="Card?.Application_No">
+    <ion-card>
+      <ion-card-content >
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+
+          <ion-row>
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Leave Type</ion-label>
+                <ion-text>{{ Card?.Leave_Type_Decription }}</ion-text>
+              </ion-item>
+            </ion-col>
+
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Start Date</ion-label>
+                <ion-text>{{ Card.Start_Date }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Days Applied</ion-label>
+                <ion-text>{{ Card?.Days_To_Go_on_Leave }}</ion-text>
+              </ion-item>
+            </ion-col>
+
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Reliever</ion-label>
+                <ion-text>{{ Card?.Reliever_Name }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">End Date</ion-label>
+                <ion-text>{{ Card?.End_Date }}</ion-text>
+              </ion-item>
+            </ion-col>
+
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Return Date</ion-label>
+                <ion-text>{{ Card?.Return_Date }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col >
+              <ion-item>
+                <ion-label position="fixed">Approval Status</ion-label>
+                <ion-text>{{ Card?.Status }}</ion-text>
+              </ion-item>
+            </ion-col>
+
+            
+          </ion-row>
+
+          
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        
+      
+
+        </ion-card-content>
+
+  </ion-card>
+</ion-content>
+
+
+
+
+
+

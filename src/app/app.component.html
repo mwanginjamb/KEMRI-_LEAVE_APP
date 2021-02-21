@@ -1,3 +1,52 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+<!-- Side Menu -->
+<ion-menu persistent="true" side="start" menuId="m1">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title> Kemri Wellcome Trust Leave App </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  
+    <section class="ion-text-center">
+      <ion-icon class="person" name="Person"></ion-icon>
+      <h4>Welcome, <br>
+        {{ username }} 
+      </h4>
+    </section>
+    
+  <ion-list>
+
+    <ion-menu-toggle>
+      <ion-item lines="none" [routerLink]="['leave']">
+        <ion-icon name="business" slot="start"></ion-icon>
+        <ion-label>Leave List</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle>
+      <ion-item lines="none" [routerLink]="['leave','apply']">
+        <ion-icon name="business" slot="start"></ion-icon>
+        <ion-label>Apply Leave</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle>
+      <ion-item lines="none" (click)="exit()" button>
+        <ion-icon name="exit" slot="start"></ion-icon>
+        <ion-label>Exit</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+  
+</ion-content>
+
+</ion-menu>
+<!--/-Side Menu -->
+
+
+  <ion-router-outlet main></ion-router-outlet>
 </ion-app>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">kemri_ess</string>
+    <string name="title_activity_main">kemri_ess</string>
+    <string name="package_name">com.kemriwellcome.app</string>
+    <string name="custom_url_scheme">com.kemriwellcome.app</string>
+</resources>

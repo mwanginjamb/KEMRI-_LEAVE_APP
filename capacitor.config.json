@@ -1,0 +1,13 @@
+{
+  "appId": "com.kemriwellcome.app",
+  "appName": "KEMRI_WELLCOME_APP",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

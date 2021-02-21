@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/leave"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Update Leave {{ Leave.Application_No }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+
+
+      <ion-list>
+
+        <ion-item>
+          <ion-label position="floating">Leave Type</ion-label>
+          <ion-select [(ngModel)] = "Leave.Leave_Code" [selectedText]="Leave.Leave_Code" placeholder="Select .." (ionChange)="updateLeave()">
+            <ion-select-option *ngFor="let lc of leaveTypes" [value]="lc.Leave_Code" >{{ lc.Code }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">Leave Start Date</ion-label>
+          <ion-datetime [(ngModel)]="Leave.Start_Date" type="date" displayFormat="YYYY-MM-DD" (ionChange)="updateLeave()"></ion-datetime>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">Day to go on Leave</ion-label>
+          <ion-input [(ngModel)]="Leave.Days_To_Go_on_Leave" type="number" (ionChange)="updateLeave()"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">Reliever</ion-label>
+          <ion-select [(ngModel)] = "Leave.Reliever" [selectedText]="Leave.Reliever_Name" placeholder="Select .." (ionChange)="updateLeave()">
+            <ion-select-option *ngFor="let r of employees" [value]="r.No" >{{ r.Full_Name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+    
+        <ion-item no-lines>
+          <ion-label position="floating">Comments</ion-label>
+          <ion-textarea [(ngModel)]="Leave.Comments" maxlength="200" (ionBlur)="updateLeave()"></ion-textarea>
+        </ion-item>
+
+        <ion-item no-lines>
+          
+          <ion-input [(ngModel)]="Leave.Key" readonly="true" type="hidden"></ion-input>
+          <ion-input [(ngModel)]="Leave.Application_No" readonly="true" type="hidden"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Leave Balance</ion-label>
+          <ion-input [(ngModel)]="Leave.Leave_balance" readonly="true" ></ion-input>
+        </ion-item>
+    
+    
+      </ion-list>
+    
+      <ion-button color="secondary" (click)="apply()" expand="block" fill="outline" >
+        Apply
+      </ion-button>
+
+    </ion-col>
+  </ion-row>
+</ion-content>
