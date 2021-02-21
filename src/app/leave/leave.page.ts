@@ -14,6 +14,7 @@ import { LeaveService } from './leave.service';
 })
 export class LeavePage implements OnInit, OnDestroy {
   EmployeeNo: string;
+  Gender: string;
   leave: Leave = new Leave();
   employeeSub: Subscription;
   leaveTypesSub: Subscription;
@@ -34,9 +35,10 @@ export class LeavePage implements OnInit, OnDestroy {
 
  async ngOnInit() {
    await this.fetchEmployeeNo();
+   await this.fetchEmployeeGender();
     this.dismissPopover();
     this.fetchEmployees();
-    this.fetchLeaveTypes();
+    this.fetchLeaveTypes(this.Gender);
     if(this.EmployeeNo){
       this.leaveInit();
     }
@@ -67,8 +69,15 @@ export class LeavePage implements OnInit, OnDestroy {
     console.log(this.EmployeeNo);
   }
 
-  fetchLeaveTypes() {
-    this.leaveTypesSub = this.leaveService.LeaveTypes.subscribe( result => {
+  async fetchEmployeeGender() {
+    const Employee = await this.authService.getEmployee()
+    this.Gender =  Employee?.Gender;
+    console.log('Employee Gender........');
+    console.log(Employee.Gender);
+  }
+
+  fetchLeaveTypes(Gender: string) {
+    this.leaveTypesSub = this.leaveService.LeaveTypes(Gender).subscribe( result => {
      
       this.leaveTypes = result;
       

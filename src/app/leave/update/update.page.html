@@ -18,19 +18,19 @@
 
         <ion-item>
           <ion-label position="floating">Leave Type</ion-label>
-          <ion-select [(ngModel)] = "Leave.Leave_Code" [selectedText]="Leave.Leave_Code" placeholder="Select .." (ionChange)="updateLeave()">
+          <ion-select [(ngModel)] = "Leave.Leave_Type_Decription" [selectedText]="Leave.Leave_Type_Decription" placeholder="Select .." (ionChange)="updateLeave()">
             <ion-select-option *ngFor="let lc of leaveTypes" [value]="lc.Leave_Code" >{{ lc.Code }}</ion-select-option>
           </ion-select>
         </ion-item>
     
         <ion-item>
           <ion-label position="floating">Leave Start Date</ion-label>
-          <ion-datetime [(ngModel)]="Leave.Start_Date" type="date" displayFormat="YYYY-MM-DD" (ionChange)="updateLeave()"></ion-datetime>
+          <ion-datetime [(ngModel)]="Leave.Start_Date" type="date" displayFormat="YYYY-MM-DD" (ionBlur)="updateLeave()"></ion-datetime>
         </ion-item>
     
         <ion-item>
           <ion-label position="floating">Day to go on Leave</ion-label>
-          <ion-input [(ngModel)]="Leave.Days_To_Go_on_Leave" type="number" (ionChange)="updateLeave()"></ion-input>
+          <ion-input [(ngModel)]="Leave.Days_To_Go_on_Leave" type="number" (ionBlur)="updateLeave()"></ion-input>
         </ion-item>
     
         <ion-item>

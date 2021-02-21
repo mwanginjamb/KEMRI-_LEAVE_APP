@@ -13,16 +13,16 @@ export class LeaveService {
 
   constructor(private http: HttpClient) { }
 
-  get Leaves() {
-    return this.http.get<Leave[]>(`${this.url}site/list`).pipe(take(1));
+  Leaves(No:string) {
+    return this.http.get<Leave[]>(`${this.url}site/list?EmpNo=${No}`).pipe(take(1));
   }
 
   get Employees() {
     return this.http.get(`${this.url}site/employees`).pipe(take(1));
   }
 
-  get LeaveTypes() {
-    return this.http.get(`${this.url}site/leave-types`).pipe(take(1));
+  LeaveTypes(Gender: string) {
+    return this.http.get(`${this.url}site/leave-types?gender=${Gender}`).pipe(take(1));
   }
 
   Leave(EmpNo: string) {

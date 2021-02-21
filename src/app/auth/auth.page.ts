@@ -54,7 +54,7 @@ export class AuthPage implements OnInit {
       })
     )
     .subscribe( async (result) => {
-        if (result.Key) {
+        if (typeof result === 'object') {
           // redirect to dashboard and store user data in local storage
           this.auth.login(result);  // Saves User Session
           this.user = result;
@@ -62,7 +62,7 @@ export class AuthPage implements OnInit {
           await this.auth.authenticated(true);
           return this.router.navigate(['./leave']);
         }else{
-          this.failed = true;
+          
           this.alertCtrl.create(
             {
               header: 'Operation Error',
@@ -72,10 +72,21 @@ export class AuthPage implements OnInit {
           ).then(alertEl => {
             alertEl.present();
           });
+
+          this.failed = true;
         }
     }, error => {
-      console.log(error.error);
+      this.alertCtrl.create(
+        {
+          header: 'Service Error',
+          message: 'Message: '+ error.error.message,
+          buttons: [{ text: 'Okay', handler: () => this.alertCtrl.dismiss() }]
+        }
+      ).then(alertEl => {
+        alertEl.present();
+      });
       this.failed = true;
+
     });
   }
 

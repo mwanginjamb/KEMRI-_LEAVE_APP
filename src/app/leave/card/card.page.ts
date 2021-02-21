@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { Leave } from 'src/app/models/leave.model';
 import { LeaveService } from '../leave.service';
 import { UpdatePopoverComponent } from '../update-popover/update-popover.component';
@@ -25,14 +25,8 @@ export class CardPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(this.id);
-
     this.cardSub = this.leaveService.LeaveCard(this.id).subscribe(result => {
       this.Card = result;
-
-      // console.table(
-      //   this.Card
-      //   );
     });  
   }
   
@@ -51,6 +45,21 @@ export class CardPage implements OnInit, OnDestroy {
     }).then(pop => {
       pop.present();
     });
+  }
+
+  refresh(event) {
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.cardSub = this.leaveService.LeaveCard(this.id).subscribe(result => {
+      this.Card = result;
+    });
+    
+    timer(2000).subscribe( () => {
+      if(event) {
+        event.target.complete();
+      }
+    });
+    
+
   }
 
 }

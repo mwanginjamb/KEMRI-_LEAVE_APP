@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, PopoverController, ToastController } from '@ionic/angular';
 import { Subscription, timer } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Leave } from 'src/app/models/leave.model';
 import { LeaveService } from '../leave.service';
 
@@ -15,6 +16,7 @@ export class UpdatePage implements OnInit {
 
   Leave: Leave = new Leave();
   id: string;
+  Gender: string;
   leaveSub: Subscription;
   loading: HTMLIonLoadingElement;
   leaveTypesSub: Subscription;
@@ -32,15 +34,16 @@ export class UpdatePage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private router: Router,
-
+    private authService: AuthService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    await this.fetchEmployeeGender();
     console.log(`Leave Id is : ${this.id}`);
 
     this.dismissPopover();
-    this.fetchLeaveTypes();
+    this.fetchLeaveTypes(this.Gender);
     this.fetchEmployees();
     // Get the damn leave to update
     this.fetchLeave(this.id);
@@ -99,8 +102,8 @@ export class UpdatePage implements OnInit {
     await this.loading.present();
   }
 
-  fetchLeaveTypes() {
-    this.leaveTypesSub = this.leaveService.LeaveTypes.subscribe( result => {
+  fetchLeaveTypes(Gender: string) {
+    this.leaveTypesSub = this.leaveService.LeaveTypes(Gender).subscribe( result => {
      
       this.leaveTypes = result;
       
@@ -113,6 +116,13 @@ export class UpdatePage implements OnInit {
       this.employees = res;
       
     });
+  }
+
+  async fetchEmployeeGender() {
+    const Employee = await this.authService.getEmployee()
+    this.Gender =  Employee?.Gender;
+    console.log('Employee Gender........');
+    console.log(Employee.Gender);
   }
 
   apply() {

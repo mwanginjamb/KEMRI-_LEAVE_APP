@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Leave } from 'src/app/models/leave.model';
@@ -19,7 +19,7 @@ export class ListPage implements OnInit, OnDestroy {
   EmployeeNo: string;
   leaveSub: Subscription;
   leaves: Leave[];
-  searchTerm = '';
+  searchTerm: string = '';
   user: any;
   loading: HTMLIonLoadingElement;
  
@@ -39,10 +39,13 @@ export class ListPage implements OnInit, OnDestroy {
    }
 
   async ngOnInit() {
-    // Get a list of leaves
-    this.fetchLeaveList();
     await this.fetchEmployeeNo();
-
+    // Get a list of leaves
+    if(this.EmployeeNo) {
+      this.fetchLeaveList(this.EmployeeNo);
+    }
+    
+    
   }
 
   async fetchEmployeeNo() {
@@ -60,9 +63,9 @@ export class ListPage implements OnInit, OnDestroy {
     
   }
 
-  fetchLeaveList() {
+  fetchLeaveList(Empno: string) {
     this.presentLoading();
-    this.leaveSub = this.leaveSearvice.Leaves
+    this.leaveSub = this.leaveSearvice.Leaves(Empno)
     .pipe(
       finalize(async () => {
         await this.loading.dismiss();
@@ -122,8 +125,37 @@ export class ListPage implements OnInit, OnDestroy {
   }
 
   search($event) {
+     // get a copy of requisitions
+     const searchItems = [... this.leaves];
 
+     // Begin search, only if searchTerm is provided
+     if (this.searchTerm.trim().length && this.searchTerm !== '') {
+       this.leaves = searchItems.filter((req) => {
+         if ( req.Application_No && req.Application_No.length > 1 ){
+           return ( req.Application_No.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1 );
+         }
+      });
+       return;
+     }else{ // Search Term not provided display all requisitions
+       this.initializeItems();
+     }
   }
+
+  refresh(event) {
+    this.fetchLeaveList(this.EmployeeNo);
+
+    timer(900).subscribe( () => {
+      if(event) {
+        event.target.complete();
+      }
+    });
+   
+  }
+
+  initializeItems() {
+   this.fetchLeaveList(this.EmployeeNo);
+  }
+
 
   ngOnDestroy() {
     if(this.leaveSub) {
