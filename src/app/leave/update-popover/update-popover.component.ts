@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-update-popover',
@@ -7,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdatePopoverComponent implements OnInit {
 
+  @Input() No;
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(`Leave No: ${this.No}`);
+  }
 
 }

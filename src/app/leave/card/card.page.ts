@@ -46,6 +46,7 @@ export class CardPage implements OnInit, OnDestroy {
   updatePopover(event,No: string) {
     return this.popOverCtrl.create({
       component: UpdatePopoverComponent,
+      componentProps: { No },
       event
     }).then(pop => {
       pop.present();
