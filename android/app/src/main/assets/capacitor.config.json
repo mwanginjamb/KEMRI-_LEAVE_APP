@@ -1,6 +1,6 @@
 {
-  "appId": "com.kemriwellcome.app",
-  "appName": "KEMRI_WELLCOME_APP",
+  "appId": "com.kemriwellcometrust.leave.app",
+  "appName": "KEMRI_WELLCOME_TRUST_LEAVE_APP",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -9,5 +9,11 @@
       "launchShowDuration": 0
     }
   },
+  "proxies": [
+    {
+      "path": "/",
+      "proxyUrl": "http://192.168.1.118:2028"
+    }
+  ],
   "cordova": {}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { User } from './user';
@@ -28,7 +28,8 @@ export class AuthPage implements OnInit {
     private auth: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private storage: Storage
+    private storage: Storage,
+    private alertCtrl: AlertController
     ) { }
 
   ngOnInit() {
@@ -62,6 +63,15 @@ export class AuthPage implements OnInit {
           return this.router.navigate(['./leave']);
         }else{
           this.failed = true;
+          this.alertCtrl.create(
+            {
+              header: 'Operation Error',
+              message: 'Message: '+ result,
+              buttons: [{ text: 'Okay', handler: () => this.alertCtrl.dismiss() }]
+            }
+          ).then(alertEl => {
+            alertEl.present();
+          });
         }
     }, error => {
       console.log(error.error);
